@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "shell.h"
 #define RISCV_REGS 32 
 
@@ -19,10 +20,11 @@ CPU_State STATE_CURRENT, STATE_NEXT;
 int RUN_BIT; /* initialized to 1; need to be changed to 0 if the HLT instruction is encountered */ 
 
 //Variable Declarations
-char instructionInput[100];
+char instructionInput[100]; //store instruction read from .mem file
 char registerTarget[5];
 char registerOne[5];
 char registerTwo[5];
+
 
 
 const char *instructions[] = {
@@ -38,7 +40,47 @@ const char *instructions[] = {
 
 void fetch()
 {
+    //local declarations
+    int i = 0;
+    FILE *file == fopen("instruction.mem", "r");//open instruction file
 
+
+    if(file == NULL){ //if null file not opened
+
+        perror("Failed to open file"); //print error
+        return 1;
+
+    }
+
+    char hexInput[101];
+    
+    while(fgets(hexInput, sizeof(hexInput), file) != NULL){ //open file
+
+        int len = 0;
+        while(hexInput[len != '\0' && hexInput[len] != '\n']){ //get length of file in char
+
+            len++;
+
+        }
+
+        if (hexInput[len] == '\n'){ //replace every new line
+
+            hexInput[len] = '\0';
+
+        }
+
+        for(int i = 0; i < len ;  i++){ //input every 8 char into the instructionInput array
+
+            instructionInput[i] = hexInput[i];
+
+        }
+
+        instructionInput[len] = '\0'; //null terminate the string
+
+
+
+
+    }
 } 
 
 void decode()
