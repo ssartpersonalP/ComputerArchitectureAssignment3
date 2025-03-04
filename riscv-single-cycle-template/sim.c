@@ -20,6 +20,10 @@ int RUN_BIT; /* initialized to 1; need to be changed to 0 if the HLT instruction
 
 //Variable Declarations
 char instructionInput[100];
+char registerTarget[5];
+char registerOne[5];
+char registerTwo[5];
+
 
 const char *instructions[] = {
         "add",   // Addition
