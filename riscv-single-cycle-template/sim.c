@@ -1,5 +1,22 @@
 #include <stdio.h>
 #include "shell.h"
+#define RISCV_REGS 32 
+
+typedef struct CPU_State { 
+  uint32_t PC;                /* program counter */ 
+  uint32_t REGS[RISCV_REGS];   /* register file. */ 
+  int FLAG_NV;        /* invalid */ 
+  int FLAG_DZ;        /* divide by zero */ 
+  int FLAG_OF;        /* overflow */ 
+  int FLAG_UF;        /* underflow */ 
+  int FLAG_NX;        /* inexact */
+} CPU_State;  
+
+/* STATE_CURRENT is the current arch. state */ 
+/* STATE_NEXT is the resulting arch. state 
+   after the current instruction is processed */ 
+CPU_State STATE_CURRENT, STATE_NEXT; 
+int RUN_BIT; /* initialized to 1; need to be changed to 0 if the HLT instruction is encountered */ 
 
 void fetch()
 {
