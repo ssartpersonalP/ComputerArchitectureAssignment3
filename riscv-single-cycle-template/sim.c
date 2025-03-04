@@ -18,6 +18,20 @@ typedef struct CPU_State {
 CPU_State STATE_CURRENT, STATE_NEXT; 
 int RUN_BIT; /* initialized to 1; need to be changed to 0 if the HLT instruction is encountered */ 
 
+//Variable Declarations
+char instructionInput[100];
+
+const char *instructions[] = {
+        "add",   // Addition
+        "slt",   // Set less than
+        "addi",  // Add immediate
+        "slli",  // Shift left logical immediate
+        "sw",    // Store word
+        "bne",   // Branch if not equal
+        "auipc", // Add upper immediate to program counter
+        "jal"    // Jump and link
+    };
+
 void fetch()
 {
 
