@@ -80,8 +80,7 @@ void execute() {
 
             uint32_t immediate = imm;
             uint32_t shifted = immediate << 12;
-            PC = CURRENT_STATE.PC;
-            CURRENT_STATE.REGS[rd] = PC + shifted;
+            CURRENT_STATE.REGS[rd] = CURRENT_STATE.PC + shifted;
             break;
 
         case 0x13:  // I-type instructions.
