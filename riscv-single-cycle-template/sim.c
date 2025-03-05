@@ -61,12 +61,17 @@ void decode() {
 }
 
 void execute() {
+    uint32_t opcode = instruction & 0x7F;         // opcode (7 bits)
+    uint32_t rd = (instruction >> 7) & 0x1F;      // destination register (rd)
+    uint32_t funct3 = (instruction >> 12) & 0x7;  // funct3 (3 bits)
+    uint32_t rs1 = (instruction >> 15) & 0x1F;    // source register 1 (rs1)
+    uint32_t rs2 = (instruction >> 20) & 0x1F;    // source register 2 (rs2)
+    uint32_t funct7 = (instruction >> 25) & 0x7F;  // funct7 (7 bits)
     switch (opcode) {
         case 0x37:  // LUI: rd = immediate.
 
             uint32_t immediate = imm;
-            rd = immediate << 12;
-            return rd;
+            CURRENT_STATE.REGS[rd] = immediate << 12;
             break;
 
 
@@ -76,11 +81,24 @@ void execute() {
             uint32_t immediate = imm;
             uint32_t shifted = immediate << 12;
             PC = CURRENT_STATE.PC;
-            rd = PC + shifted;
-            return rd;
+            CURRENT_STATE.REGS[rd] = PC + shifted;
             break;
 
         case 0x13:  // I-type instructions.
+
+            if (funct3 == 0x0 && funct7 == 0x00) {
+                // This is an ADD instruction.
+                printf("ADD instruction\n");
+                
+            }
+            else if (funct3 == 0x2 && funct7 == 0x00) {
+                // This is an SLT instruction.
+                printf("SLT instruction\n");
+            }
+            else {
+                // Other R-type operations
+                printf("Other R-type instruction\n");
+            }
             break;
 
         case 0x33:  // R-type instructions.
