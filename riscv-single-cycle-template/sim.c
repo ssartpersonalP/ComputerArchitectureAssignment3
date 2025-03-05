@@ -60,12 +60,6 @@ void decode() {
            opcode, rd, rs1, rs2, funct3, funct7, imm);
 }
 
-// Execute: Update the state according to the decoded instruction.
-uint32_t auipc(uint32_t pc, uint32_t immediate) {
-    return pc + (immediate << 12);  // PC + (imm << 12)
-}
-
-
 void execute() {
     switch (opcode) {
         case 0x37:  // LUI: rd = immediate.
